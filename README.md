@@ -1,6 +1,6 @@
 ACME Certificate Generation with DNS Challenge Automation 
 =========================================================
-[![Build Status](https://travis-ci.org/devnullcake/ansible-role-acme-certificate.svg?branch=master)](https://travis-ci.org/devnullcake/ansible-role-acme-certificate) [![Ansible Role](https://img.shields.io/ansible/role/24945.svg)](https://galaxy.ansible.com/devnullcake/ansible-role-acme-certificate/)
+[![Build Status](https://travis-ci.org/devnullcake/ansible-role-acme-certificate.svg?branch=master)](https://travis-ci.org/devnullcake/ansible-role-acme-certificate) [![Ansible Role](https://img.shields.io/ansible/role/24945.svg)](https://galaxy.ansible.com/devnullcake/acme-certificate/)
 
 An opinionated role using ansible [letsencrypt](http://docs.ansible.com/ansible/latest/modules/letsencrypt_module.html) module and [crypto modules](http://docs.ansible.com/ansible/latest/modules/list_of_crypto_modules.html) to allow for easy account registration, certificate generation and certificate signing against a server implementing [ACME](https://github.com/ietf-wg-acme/acme).
 
