@@ -42,7 +42,6 @@ In order to allow increased flexibility when generating signing requests, the fo
 * `acme_csr_subject_alt_name`
 * `acme_csr_organization_name`
 * `acme_csr_organization_unit_name`
-* ``
 
 Dependencies
 ------------
