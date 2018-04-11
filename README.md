@@ -29,6 +29,21 @@ Role Variables
 
 A list of available configuration variables can be found in the [defaults/main.yml](defaults/main.yml) file. Only a limited subset of the variables need to specified, unless further control is required.
 
+### Additional Variables
+
+#### Private Key Generation
+When generating keys for either account registration or certificates, the following optional configuration variables are available for use.
+
+* `acme_private_key_cipher`
+
+#### Signing Request Generation
+In order to allow increased flexibility when generating signing requests, the following optional variables are available for use.
+
+* `acme_csr_subject_alt_name`
+* `acme_csr_organization_name`
+* `acme_csr_organization_unit_name`
+* ``
+
 Dependencies
 ------------
 
@@ -49,8 +64,10 @@ Example Playbook
         - include_role:
              name: devnullcake.acme-certificate
           vars:
+            acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
             acme_destination: /tmp
             acme_csr_common_name: "foo.bar.example.com"
+            acme_csr_subject_alt_name: "*.baz.example.com"
             dns_zone: example.com
             dns_cloud_provider: azure
             dns_cloud_provider_config:
