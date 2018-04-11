@@ -1,0 +1,12 @@
+dependencies: []
+
+galaxy_info:
+  author: "Arun Neelicattu"
+  description: "ACME Certificate Generation with DNS Challenge Automation"
+  issue_tracker_url: https://github.com/devnullcake/ansible-role-acme-certificate/issues
+  license: Apache
+  min_ansible_version: 2.0
+  galaxy_tags:
+    - ansible:tls:certificate
+    - cloud:dns:azure
+    - acme:letsencrypt:dns-challenge
