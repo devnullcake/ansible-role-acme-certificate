@@ -1,0 +1,42 @@
+---
+- name: assert required configuration is provided
+  assert:
+    msg: "Configuration required for generation of private key and csr unavailable."
+    that:
+      - acme_csr_common_name is defined
+      - "{{ ( acme_csr_common_name | length ) > 0 }}"
+
+- name: stat account key file
+  stat:
+    path: "{{ acme_account_key }}"
+  register: account_key_file
+
+- import_tasks: openssl/generate-private-key.yml
+  vars:
+    generated_key_path: "{{ acme_account_key }}"
+  when: not account_key_file.stat.exists
+
+- name: stat private key file
+  stat:
+    path: "{{ acme_private_key }}"
+  register: private_key_file
+
+- import_tasks: openssl/generate-private-key.yml
+  vars:
+    generated_key_path: "{{ acme_private_key }}"
+  when: not private_key_file.stat.exists or acme_force_generation
+
+
+- name: stat signing request file
+  stat:
+    path: "{{ acme_csr }}"
+  register: csr_file
+
+- name: generate signing request
+  import_tasks: openssl/generate-csr.yml
+  when: ( not private_key_file.stat.exists or acme_force_generation )
+    or ( not csr_file.stat.exists or acme_csr_force )
+
+- name: ensure generation is not repeated
+  set_fact:
+    acme_generation_complete: yes

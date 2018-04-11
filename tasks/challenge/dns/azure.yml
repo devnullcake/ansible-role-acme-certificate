@@ -1,0 +1,20 @@
+---
+# TODO: handle SANs in different zones and resource groups
+- block:
+    - name: ensure required zone exists
+      azure_rm_dnszone:
+        resource_group: "{{ dns_cloud_provider_config.azure.resource_group }}"
+        name: "{{ dns_zone }}"
+        state: present
+
+    - name: "ensure validation TXT record is {{ dns_record_state | default('present') }}"
+      azure_rm_dnsrecordset:
+        resource_group: "{{ dns_cloud_provider_config.azure.resource_group }}"
+        relative_name: "{{ item.key | replace('.' + dns_zone, '') }}"
+        zone_name: "{{ dns_zone }}"
+        record_type: TXT
+        state: "{{ dns_record_state | default('present') }}"
+        records:
+          - entry: "{{ item.value[0] }}"
+      with_dict: "{{ acme_challenge.challenge_data_dns }}"
+  when: acme_challenge is changed or force_dns_update

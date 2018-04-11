@@ -1,0 +1,14 @@
+---
+- name: ensure generation is not ambiguous
+  assert:
+    msg: "Generation is both skipped and forced. This is ambiguous."
+    that:
+      - not ( acme_skip_generation and acme_force_generation )
+
+- name: generate private key and signing request
+  import_tasks: generate.yml
+  when:
+    - acme_generation_complete is not defined
+    - not acme_skip_generation or acme_force_generation
+
+- import_tasks: acme.yml

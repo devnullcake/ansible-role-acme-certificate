@@ -1,0 +1,58 @@
+---
+- name: create a challenge using a account key file
+  letsencrypt:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ acme_account_key }}"
+    account_email: "{{ acme_account_email | mandatory }}"
+    csr: "{{ acme_csr }}"
+    fullchain_dest: "{{ acme_certificate }}"
+    challenge: dns-01
+    remaining_days: "{{ acme_remaining_days }}"
+    validate_certs: "{{ acme_validate_certs }}"
+    terms_agreed: yes
+    data: "{{ acme_challenge | default(omit) }}"
+  register: result
+
+- name: store acme challenge
+  set_fact:
+    acme_challenge: result
+  when: acme_challenge is undefined
+
+- name: create a challenge using a account key file
+  letsencrypt:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ acme_account_key }}"
+    account_email: "{{ acme_account_email | mandatory }}"
+    csr: "{{ acme_csr }}"
+    dest: "{{ acme_certificate }}"
+    fullchain_dest: "{{ acme_certificate_fullchain }}"
+    challenge: dns-01
+    remaining_days: "{{ acme_remaining_days }}"
+    validate_certs: "{{ acme_validate_certs }}"
+    terms_agreed: yes
+  register: acme_challenge
+
+- import_tasks: "challenge/dns/{{ dns_cloud_provider }}.yml"
+  vars:
+    dns_record_state: present
+
+- name: let the challenge be validated and the certificate returned
+  letsencrypt:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ acme_account_key }}"
+    account_email: "{{ acme_account_email | mandatory }}"
+    csr: "{{ acme_csr }}"
+    dest: "{{ acme_certificate }}"
+    fullchain_dest: "{{ acme_certificate_fullchain }}"
+    challenge: dns-01
+    remaining_days: "{{ acme_remaining_days }}"
+    validate_certs: "{{ acme_validate_certs }}"
+    terms_agreed: yes
+    data: "{{ acme_challenge }}"
+
+- import_tasks: "challenge/dns/{{ dns_cloud_provider }}.yml"
+  vars:
+    dns_record_state: absent

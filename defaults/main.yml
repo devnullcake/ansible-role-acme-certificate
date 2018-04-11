@@ -1,0 +1,31 @@
+---
+acme_force_generation: no
+acme_challenge_force: no
+acme_skip_generation: no
+
+acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+acme_version: 2
+acme_remaining_days: 60
+acme_validate_certs: no
+
+acme_output_path: "{{ playbook_dir }}"
+acme_output_prefix: "{{ acme_output_path }}/{{ acme_csr_common_name }}"
+
+acme_account_key: "{{ acme_output_path }}/acme-registration.key"
+
+acme_private_key: "{{ acme_output_prefix }}.pem"
+
+acme_certificate: "{{ acme_output_prefix }}.crt"
+acme_certificate_fullchain: "{{ acme_output_prefix }}-fullchain.crt"
+
+acme_csr: "{{ acme_output_prefix }}.csr"
+acme_csr_common_name: "{{ default(omit) }}"
+acme_csr_force: no
+
+force_dns_update: no
+
+dns_zone:
+dns_cloud_provider: azure
+dns_cloud_provider_config:
+  azure:
+    resource_group:

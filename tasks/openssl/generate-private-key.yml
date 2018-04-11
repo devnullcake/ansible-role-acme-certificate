@@ -1,0 +1,6 @@
+---
+- name: generate key via openssl
+  openssl_privatekey:
+    path: "{{ generated_key_path }}"
+    force: "{{ acme_force_generation }}"
+    cipher: "{{ acme_private_key_cipher | default(omit) }}"

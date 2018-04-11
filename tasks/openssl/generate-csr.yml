@@ -1,0 +1,10 @@
+---
+- name: create signing request via openssl
+  openssl_csr:
+    path: "{{ acme_csr }}"
+    privatekey_path: "{{ acme_private_key }}"
+    force: "{{ acme_csr_force }}"
+    common_name: "{{ acme_csr_common_name }}"
+    subject_alt_name: "{{ acme_csr_subject_alt_name | default(omit) }}"
+    organizationName: "{{ acme_csr_organization_name | default(omit) }}"
+    organizationalUnitName: "{{ acme_csr_organization_unit_name | default(omit) }}"
