@@ -6,7 +6,12 @@ galaxy_info:
   issue_tracker_url: https://github.com/devnullcake/ansible-role-acme-certificate/issues
   license: Apache
   min_ansible_version: 2.0
+  platforms:
+    - name: GenericLinux
+      versions:
+        - all
+        - any
   galaxy_tags:
     - ansible:tls:certificate
     - cloud:dns:azure
-    - acme:letsencrypt:dns-challenge
+    - acme:letsencrypt:challenge
