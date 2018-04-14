@@ -58,15 +58,16 @@ Example Playbook
 
     ---
     - name: prepare certificate for foo.bar.example.com
-      hosts: localhost
+      hosts: 127.0.0.1
+      connection: local
       tasks:
         - include_role:
              name: devnullcake.acme-certificate
           vars:
             acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
-            acme_destination: /tmp
+            acme_output_path: /tmp
             acme_csr_common_name: "foo.bar.example.com"
-            acme_csr_subject_alt_name: "*.baz.example.com"
+            acme_csr_subject_alt_name: "DNS:*.baz.example.com"
             dns_zone: example.com
             dns_cloud_provider: azure
             dns_cloud_provider_config:
